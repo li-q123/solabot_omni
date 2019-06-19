@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="use_rviz" default="true" />
+    <arg name="init_x" default="0.0" />
+    <arg name="init_y" default="0.0" />
+    <arg name="init_a" default="0.0" />
+
+    <!-- keyboard teleop -->
+    <node name="teleop_twist_keyboard" pkg="solabot_navigation" type="teleop_twist_keyboard.py" />
+    
+    <!-- solabot core -->
+    <include file="$(find solabot_navigation)/launch/solabot_core.launch" />
+    
+    <!-- Map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find solabot_navigation)/maps/213_0308.yaml"/>
+
+    <!-- AMCL -->
+    <include file="$(find solabot_navigation)/launch/includes/amcl.xml">
+        <arg name="init_x" value="$(arg init_x)"/>
+        <arg name="init_y" value="$(arg init_y)"/>
+        <arg name="init_a" value="$(arg init_a)"/>
+    </include>
+
+    <!-- Rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find solabot_navigation)/rviz_cfg/amcl.rviz" if="$(arg use_rviz)" />
+
+</launch>

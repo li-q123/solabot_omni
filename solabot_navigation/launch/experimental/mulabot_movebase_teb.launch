@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+    
+  <!-- Map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find solabot_navigation)/maps/1219.yaml">
+    <param name="frame_id" value="/map" />
+  </node>
+
+  <!-- BEGIN ROBOT 1-->
+  <group ns="car1">
+    <include file="$(find solabot_navigation)/launch/experimental/mulabot_movebase_teb_onecar.launch" >
+      <arg name="robot_name" value="car1" />
+      <arg name="use_rviz" default="true" />
+      <arg name="init_x" default="1.0" />
+      <arg name="init_y" default="1.0" />
+      <arg name="init_a" default="0.0" />
+    </include>
+  </group>
+
+  <!-- BEGIN ROBOT 2-->
+  <group ns="car2">
+    <include file="$(find solabot_navigation)/launch/experimental/mulabot_movebase_teb_onecar.launch" >
+      <arg name="robot_name"  value="car2" />
+      <arg name="use_rviz" default="true" />
+      <arg name="init_x" default="-1.0" />
+      <arg name="init_y" default="1.0" />
+      <arg name="init_a" default="0.0" />
+    </include>
+  </group>
+
+  <!-- Rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find solabot_navigation)/rviz_cfg/amcl.rviz" if="$(arg use_rviz)" />
+
+</launch>
+

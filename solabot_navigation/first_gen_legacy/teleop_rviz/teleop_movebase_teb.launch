@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+    <!--RVIZ -->
+    <node name = "rviz" pkg = "rviz" type = "rviz" args = "-d $(find solabot_navigation)/rviz_cfg/movebase_teb.rviz"/>
+</launch>

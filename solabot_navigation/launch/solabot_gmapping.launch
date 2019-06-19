@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="use_rviz" default="true" />
+	
+    <!-- keyboard teleop -->
+    <node name="teleop_twist_keyboard" pkg="solabot_navigation" type="teleop_twist_keyboard.py" />
+   
+    <!-- solabot core -->
+    <!-- # Actually rf2o and robot_localization will not be used-->
+    <!-- # Since gmapping has its own localization method-->
+    <include file="$(find solabot_navigation)/launch/solabot_core.launch" />
+
+    <!-- gmapping -->
+    <include file="$(find solabot_navigation)/launch/includes/gmapping.xml" />
+    
+    <!-- Rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find solabot_navigation)/rviz_cfg/gmapping.rviz" if="$(arg use_rviz)"/>
+
+</launch>

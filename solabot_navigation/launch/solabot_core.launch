@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <!-- SENSORS -->    
+		<!-- HOKUYO -->
+		<!-- done on Rpi-->
+		<!-- include file="$(find solabot_navigation)/launch/includes/urg.xml" / -->
+
+		<!-- merge scans for amcl -->
+    <node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+        <param name="destination_frame" value="base_footprint"/>
+        <param name="cloud_destination_topic" value="/merged_cloud"/>
+        <param name="scan_destination_topic" value="/scan_merged"/>
+        <param name="laserscan_topics" value ="/front/scan /rear/scan"/> <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
+
+        <param name="angle_min" value="-3.141596"/>
+        <param name="angle_max" value="3.141596"/>
+        <param name="angle_increment" value="0.006283"/>
+        <param name="scan_time" value="0.1"/>
+        <param name="range_min" value="0.2"/>
+        <param name="range_max" value="5.0"/>
+    </node>
+
+ 		<!-- RAZOR_IMU -->
+		<!-- done on Rpi-->
+		<!--
+		<arg name="razor_config_file" default="$(find solabot_rpi)/params/my_razor.yaml"/>
+        <node pkg="razor_imu_9dof" type="imu_node.py" name="razor_imu" output="screen" >
+            <remap from="imu" to="imu_data"/>
+            <rosparam file="$(arg razor_config_file)" command="load"/>
+        </node>
+		-->
+    <!-- /SENSORS -->
+		
+    <!-- ODOMETRY -->	
+		<!--rf2o_laser_odometry-->
+		<include file="$(find solabot_navigation)/launch/includes/rf2o.xml" />
+ 
+		<!-- robot_localization(ekf) -->
+		<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+			<rosparam command="load" file="$(find solabot_navigation)/params/ekf_params.yaml" />
+		</node>
+    <!-- /ODOMETRY -->
+
+    <!-- STATIC TF setting -->
+		<!-- done on Rpi-->
+    	<!-- include file="$(find solabot_navigation)/launch/includes/tf.xml" / -->
+
+</launch>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- roscore + gmapping -->
+    <include file="$(find solabot_navigation)/launch/solabot_gmapping.launch" />
+
+    <!-- move_base -->
+    <include file="$(find solabot_navigation)/launch/includes/move_base_teb.xml" />
+
+    <!-- explore_lite -->
+    <include file="$(find solabot_navigation)/launch/includes/explore.xml" />
+
+</launch>

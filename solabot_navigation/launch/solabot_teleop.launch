@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- keyboard teleop -->
+    <node name="teleop_twist_keyboard" pkg="solabot_navigation" type="teleop_twist_keyboard.py" />
+</launch>
+
