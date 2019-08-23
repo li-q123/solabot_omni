@@ -11,7 +11,7 @@
     <include file="$(find solabot_navigation)/launch/solabot_core.launch" />
     
     <!-- Map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find solabot_navigation)/maps/213_0308.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find solabot_navigation)/maps/1219.yaml"/>
     
     <!-- AMCL -->
     <include file="$(find solabot_navigation)/launch/includes/amcl.xml">

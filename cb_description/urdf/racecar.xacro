@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<robot name="racecar" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find cb_description)/urdf/macros.xacro" />
+
+  <xacro:arg name="robot_tf_prefix" default=""/>
+    
+  <!-- root links -->
+  <link name="$(arg robot_tf_prefix)base_footprint">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="$(arg robot_tf_prefix)base_link">
+    <inertial>
+      <xacro:base_link_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:base_link_geometry />
+    </visual>
+    <collision>
+      <xacro:base_link_collision_geometry />
+    </collision>
+  </link>
+
+  <joint name="$(arg robot_tf_prefix)base_link_joint" type="fixed">
+    <origin xyz="0 0 0.201" rpy="0 0 0" />
+    <parent link="$(arg robot_tf_prefix)base_footprint"/>
+    <child link="$(arg robot_tf_prefix)base_link" />
+  </joint>
+
+  <!-- Add 2 Hokuyo laser scanner -->
+
+  <link name="$(arg robot_tf_prefix)hokuyo_front_link">
+    <xacro:hokuyo_params />
+  </link>
+
+  <link name="$(arg robot_tf_prefix)hokuyo_rear_link">
+    <xacro:hokuyo_params />
+  </link>
+
+  <joint name="$(arg robot_tf_prefix)hokuyo_front_joint" type="fixed">
+    <origin xyz="0.21 0.0 0.05" rpy="0 0 0"/>
+    <parent link="$(arg robot_tf_prefix)base_link" />
+    <child link="$(arg robot_tf_prefix)hokuyo_front_link" />
+  </joint>
+
+  <joint name="$(arg robot_tf_prefix)hokuyo_rear_joint" type="fixed">
+    <origin xyz="-0.21 0.0 -0.05" rpy="0 0 3.14159"/>
+    <parent link="$(arg robot_tf_prefix)base_link" />
+    <child link="$(arg robot_tf_prefix)hokuyo_rear_link" />
+  </joint>
+
+  <!-- Add imu link -->
+
+  <link name="$(arg robot_tf_prefix)imu_link">
+    <xacro:hokuyo_params />
+  </link>
+
+  <joint name="$(arg robot_tf_prefix)imu_joint" type="fixed">
+    <origin xyz="0.02 0.0 0.0" rpy="0 0 0"/>
+    <parent link="$(arg robot_tf_prefix)base_link" />
+    <child link="$(arg robot_tf_prefix)imu_link" />
+  </joint>
+
+  <!-- Add the remaining xacros -->
+
+  <xacro:include filename="$(find cb_description)/urdf/racecar.gazebo" />
+  <xacro:include filename="$(find cb_description)/urdf/materials.xacro" />
+
+</robot>
