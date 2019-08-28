@@ -102,7 +102,7 @@
         <topicName>imu_data</topicName>
         <bodyName>$(arg robot_tf_prefix)imu_link</bodyName>
         <updateRateHZ>30.0</updateRateHZ>
-        <gaussianNoise>0.01</gaussianNoise>
+        <gaussianNoise>0.0001</gaussianNoise>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
         <frameName>$(arg robot_tf_prefix)imu_link</frameName>

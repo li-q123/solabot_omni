@@ -1,3 +1,4 @@
+frequency: 30
 sensor_timeout: 0.025
 two_d_mode: true
 transform_time_offset: 0
@@ -69,27 +70,36 @@ odom0_relative: false
 # required. Data is specified at the level of pose and twist variables, rather than for each variable in isolation.
 # For messages that have both pose and twist data, the parameter specifies to which part of the message we are applying
 # the thresholds. 
-odom0_pose_rejection_threshold: 5
-odom0_twist_rejection_threshold: 0.75
+odom0_pose_rejection_threshold: 3
+odom0_twist_rejection_threshold: 1.2
 
 imu0: /imu_data
 imu0_config: [false, false, false,
               false, false, true,
               false, false, false,
-              false, false, false,
+              false, false, true,
               true, true, false]
 imu0_nodelay: false
 imu0_differential: false
 imu0_relative: true
 imu0_queue_size: 8
-imu0_pose_rejection_threshold: 0.8                 # Note the difference in parameter names
-imu0_twist_rejection_threshold: 0.8                #
-imu0_linear_acceleration_rejection_threshold: 0.8  #
+imu0_pose_rejection_threshold: 1                 # Note the difference in parameter names
+imu0_twist_rejection_threshold: 1                #
+imu0_linear_acceleration_rejection_threshold: 1  #
 
 # [ADVANCED] Some IMUs automatically remove acceleration due to gravity, and others don't. If yours doesn't, please set
 # this to true, and *make sure* your data conforms to REP-103, specifically, that the data is in ENU frame.
 imu0_remove_gravitational_acceleration: true
 
+# ---------------------------------------------------------------------------
+use_control: true
+# vx, vy, vz, vroll, vpitch, vyaw
+control_config: [true, true, false,
+               false, false, true]
+acceleration_limits: [0.1, 0.1, 0,
+                      0, 0, 0.2]
+deceleration_limits: [0.1, 0.1, 0,
+                       0, 0, 0.2]
 
 # [ADVANCED] The process noise covariance matrix can be difficult to tune, and can vary for each application, so it is
 # exposed as a configuration parameter. This matrix represents the noise we add to the total error after each
