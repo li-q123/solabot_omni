@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
 <launch>
+    <arg name="sim" default="false" />
     <arg name="use_rviz" default="true" />
     <arg name="init_x" default="0.0" />
     <arg name="init_y" default="0.0" />
@@ -8,7 +9,8 @@
     <arg name="car_length" default="1.0" />
 
     <!-- solabot core -->
-    <include file="$(find solabot_navigation)/launch/solabot_core.launch" />
+    <include file="$(find solabot_navigation)/launch/solabot_core.launch" unless="$(arg sim)"/>
+    <include file="$(find solabot_navigation)/launch/solabot_core_sim.launch" if="$(arg sim)"/>
     
     <!-- Map server -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(find solabot_navigation)/maps/1219.yaml"/>

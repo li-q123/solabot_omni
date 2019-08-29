@@ -10,7 +10,7 @@
                       robot_tf_prefix:=$(arg robot_name)" />
     <!-- push robot_description to factory and spawn robot in gazebo -->
     <node name="racecar_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" 
-          args="-urdf $(arg init_pose) -param robot_description -model $(arg robot_name)" />
+          args="-urdf $(arg init_pose) -param robot_description -model my_car" />
 
 
   <!-- spawn a platform -->

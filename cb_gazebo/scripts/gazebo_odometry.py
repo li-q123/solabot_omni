@@ -37,16 +37,14 @@ class OdometryNode:
     def sub_robot_pose_update(self, msg):
         # Find the index of the racecar
         try:
-            arrayIndex_1 = msg.name.index('car1::car1_base_footprint')
-            arrayIndex_2 = msg.name.index('car2::car2_base_footprint')
+            arrayIndex = msg.name.index('my_car::base_footprint')
         except ValueError as e:
             # Wait for Gazebo to startup
             pass
         else:
             # Extract our current position information
-            self.last_received_pose_1 = msg.pose[arrayIndex_1]
-            self.last_received_pose_2 = msg.pose[arrayIndex_2]
-            self.last_received_twist = msg.twist[arrayIndex_1]
+            self.last_received_pose = msg.pose[arrayIndex]
+            self.last_received_twist = msg.twist[arrayIndex]
         self.last_recieved_stamp = rospy.Time.now()
 
     def timer_callback(self, event):
@@ -57,9 +55,9 @@ class OdometryNode:
         cmd.header.stamp = self.last_recieved_stamp
         cmd.header.frame_id = 'odom'
         cmd.child_frame_id = 'base_footprint'
-        cmd.pose.pose = self.last_received_pose_1
-        cmd.pose.pose.position.x = (self.last_received_pose_1.position.x + self.last_received_pose_2.position.x)/2
-        cmd.pose.pose.position.y = (self.last_received_pose_1.position.y + self.last_received_pose_2.position.y)/2
+        cmd.pose.pose = self.last_received_pose
+        cmd.pose.pose.position.x = self.last_received_pose.position.x
+        cmd.pose.pose.position.y = self.last_received_pose.position.y
         #cmd.pose.pose.position.z = 0  # odom z not equals to zero for no reason
         cmd.twist.twist = self.last_received_twist
         self.pub_odom.publish(cmd)
